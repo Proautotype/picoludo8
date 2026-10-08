@@ -1,0 +1,13 @@
+{
+  "messages": [
+    {
+      "id": "news-2026-10-seeds",
+      "title": "New seeds in the Market",
+      "body": "Dress your team as royals, pirates, robots, astronauts or neon glow. Find them in the Market's Seeds tab.",
+      "date": "2026-10-08",
+      "coins": 0,
+      "action": "market",
+      "actionLabel": "See the seeds"
+    }
+  ]
+}
