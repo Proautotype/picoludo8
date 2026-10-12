@@ -48,6 +48,7 @@ h2 { font-size: 1.6rem; margin: 48px 0 16px; }
 .dot { display: block; width: 22px; height: 22px; border-radius: 50%; }
 .dot.red { background: var(--red); } .dot.yellow { background: var(--yellow); }
 .dot.blue { background: var(--blue); } .dot.green { background: var(--green); }
+.dot.purple { background: #BE64FF; } .dot.gold { background: #FFC428; }
 
 .steps { padding-left: 1.3em; margin: 0; }
 .steps li { margin: 0 0 10px; }
