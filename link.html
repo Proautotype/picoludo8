@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pico Ludo</title>
+<meta name="robots" content="noindex">
+<!--
+  Where Pico Ludo's QR codes point (the app's QrCodes):
+    link.html?f=Kofi%231234   add a friend by their tag
+    link.html?g=ABC123        join a game with friends by its code
+  On Android it opens the game (picoludo://friend?tag=… or picoludo://join?code=…), or the Play Store
+  listing when the game isn't installed. Elsewhere it shows the tag or code and the store link.
+-->
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+         font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #2a2f6b; color: #fff; }
+  main { max-width: 360px; padding: 32px 24px; text-align: center; }
+  img { width: 96px; height: 96px; border-radius: 22px; }
+  h1 { font-size: 24px; margin: 16px 0 8px; }
+  p { margin: 8px 0; line-height: 1.45; opacity: 0.9; }
+  .value { font-size: 28px; font-weight: 800; letter-spacing: 2px; margin: 14px 0; color: #ffd620; }
+  a.button { display: block; margin-top: 14px; padding: 14px 18px; border-radius: 14px; font-weight: 700;
+             text-decoration: none; background: #ffd620; color: #1c1f4a; }
+  a.button.secondary { background: rgba(255, 255, 255, 0.14); color: #fff; }
+</style>
+</head>
+<body>
+<main>
+  <img src="logo.png" alt="Pico Ludo">
+  <h1 id="title">Pico Ludo</h1>
+  <p id="lead">Ludo with a twist.</p>
+  <div id="value" class="value"></div>
+  <a id="open" class="button" href="#">Open Pico Ludo</a>
+  <a id="store" class="button secondary" href="https://play.google.com/store/apps/details?id=com.custard.piludo">Get it on Google Play</a>
+  <p id="note"></p>
+</main>
+<script>
+  (function () {
+    var params = new URLSearchParams(location.search);
+    var tag = params.get("f"), code = params.get("g");
+    var store = "https://play.google.com/store/apps/details?id=com.custard.piludo";
+    var path = "", title = "Pico Ludo", lead = "Ludo with a twist.", value = "";
+    if (tag) { path = "friend?tag=" + encodeURIComponent(tag); title = "Add a friend"; lead = "Be friends on Pico Ludo with"; value = tag; }
+    else if (code) { path = "join?code=" + encodeURIComponent(code.toUpperCase()); title = "Join the game"; lead = "Play Pico Ludo together. Game code:"; value = code.toUpperCase(); }
+    document.getElementById("title").textContent = title;
+    document.getElementById("lead").textContent = lead;
+    document.getElementById("value").textContent = value;
+    var open = document.getElementById("open");
+    var android = /Android/i.test(navigator.userAgent);
+    if (!path) { open.style.display = "none"; return; }
+    if (android) {
+      // Opens the game if it's installed, else the Play Store (then scan again once it's installed).
+      var intent = "intent://" + path + "#Intent;scheme=picoludo;package=com.custard.piludo;S.browser_fallback_url=" + encodeURIComponent(store) + ";end";
+      open.href = intent;
+      location.href = intent;
+    } else {
+      open.href = "picoludo://" + path;
+      document.getElementById("note").textContent = "Pico Ludo is on Android. Open this on your Android phone, or type the " + (tag ? "tag" : "code") + " in the game.";
+    }
+  })();
+</script>
+</body>
+</html>
